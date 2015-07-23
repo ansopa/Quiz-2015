@@ -1,7 +1,7 @@
 var path=require("path");
 
 // Postgress DATABASE_URL=postgres://user:passwd@host:port/databse    
-DATABASE_URL=postgres://inhqtewskxaafw:8jjq6hpY5OwuRnkPkX8rBwte48@ec2-54-217-202-110.eu-west-1.compute.amazonaws.com:5432/dbo0n08f1g9hnr
+//DATABASE_URL=postgres://inhqtewskxaafw:8jjq6hpY5OwuRnkPkX8rBwte48@ec2-54-217-202-110.eu-west-1.compute.amazonaws.com:5432/dbo0n08f1g9hnr
 
 //var DATABASE_URL= sqlite://:@:/   // SQLite 
 
@@ -22,7 +22,7 @@ var Sequelize=require("sequelize");
 
 //Usar BBDD SQLite3
 
-var sequelize= new sequelize(DB_name, user, pwd,
+var sequelize= new Sequelize(DB_name, user, pwd,
 	{dialect:protocol,
 	protocol:protocol,
 	port:port,
@@ -39,14 +39,14 @@ var Quiz=sequelize.import(path.join(__dirname,"quiz"));
 exports.Quiz=Quiz;
 
 //sequelize.sync() crea e inicializa la tabla preguntas en la bd
-sequelize.sync().success(function(){
+sequelize.sync().then(function(){
 //success(..) ejecuta el manejador una vez creada la tabla
-	Quiz.count().success(function(count){
+	Quiz.count().then(function(count){
 		if(count===0){ //la tabla se inicializa solo si está vacía
 			Quiz.create({pregunta:"Capital de Italia",
 						 respuesta:"Roma"
 						})
-	.success(function(){console.log("base de datos inicializada")});
+	.then(function(){console.log("base de datos inicializada")});
 	};
 	});
 	});
