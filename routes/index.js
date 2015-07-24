@@ -8,8 +8,12 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz' });
 });
 
+// Autoload de comandos con :quizId, Se ejecuta solo si existe el parámetro quizId en la petición
+router.param('quizId', quizController.load); //autoload :quizId
+
+
 // --> Instalamos un MiddleWare al enrutador
-+/* GET author page. */
+/* GET author page. */
 router.get("/author", function(req, res) {
   res.render("author", { 
 						curso: "Desarrollo de servicios en la nube con HTML5, JavaScript y NodeJS",
